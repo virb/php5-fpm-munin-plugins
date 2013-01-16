@@ -11,7 +11,9 @@ if (! eval "require LWP::UserAgent;")
 	$ret = "LWP::UserAgent not found";
 }
 
-my $URL = exists $ENV{'url'} ? $ENV{'url'} : "http://127.0.0.1:%d/status";
+my $ENDPOINT = '/___ops/php-fpm-status.php';
+
+my $URL = exists $ENV{'url'} ? $ENV{'url'} : "http://127.0.0.1:%d/$ENDPOINT";
 my @PORTS = exists $ENV{'ports'} ? split(' ', $ENV{'ports'}) : (80);
 
 if ( defined $ARGV[0] and $ARGV[0] eq "autoconf" )
@@ -53,6 +55,12 @@ active.label Active
 active.draw AREA
 total.label Total
 total.draw STACK
+max_active.label Max Active
+max_active.draw STACK
+max_listen.label Max Listen Queue
+max_listen.draw STACK
+listen.label Listen
+listen.draw AREA
 ');
 
 	exit 0;
@@ -78,6 +86,22 @@ foreach my $port (@PORTS)
     } else {
         print "total.value U\n";
     }
+    if ($response->content =~ /max active processes:\s+([0-9\.]+)/im) {
+        print "max_active.value $1\n";
+    } else {
+        print "max_active.value U\n";
+    }
+    if ($response->content =~ /max listen queue:\s+([0-9\.]+)/im) {
+        print "max_listen.value $1\n";
+    } else {
+        print "max_listen.value U\n";
+    }
+    if ($response->content =~ /listen queue:\s+([0-9\.]+)/im) {
+        print "listen.value $1\n";
+    } else {
+        print "listen.value U\n";
+    }
+
 }
 
 # vim:syntax=perl
