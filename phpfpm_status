@@ -56,11 +56,11 @@ active.draw AREA
 total.label Total
 total.draw STACK
 max_active.label Max Active
-max_active.draw STACK
-max_listen.label Max Listen Queue
-max_listen.draw STACK
-listen.label Listen
-listen.draw AREA
+max_active.draw LINE1
+max_listen_queue.label Max Listen Queue
+max_listen_queue.draw LINE1
+listen_queue.label Listen Queue
+listen_queue.draw LINE1
 ');
 
 	exit 0;
@@ -92,14 +92,14 @@ foreach my $port (@PORTS)
         print "max_active.value U\n";
     }
     if ($response->content =~ /max listen queue:\s+([0-9\.]+)/im) {
-        print "max_listen.value $1\n";
+        print "max_listen_queue.value $1\n";
     } else {
-        print "max_listen.value U\n";
+        print "max_listen_queue.value U\n";
     }
     if ($response->content =~ /listen queue:\s+([0-9\.]+)/im) {
-        print "listen.value $1\n";
+        print "listen_queue.value $1\n";
     } else {
-        print "listen.value U\n";
+        print "listen_queue.value U\n";
     }
 
 }
