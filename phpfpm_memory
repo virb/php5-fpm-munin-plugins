@@ -4,7 +4,7 @@
 #
 # Copyright TJ Stein 2010 http://constantshift.com
 
-my $PHP_BIN = exists $ENV{'phpbin'} ? $ENV{'phpbin'} : "php5-fpm";
+my $PHP_BIN = exists $ENV{'phpbin'} ? $ENV{'phpbin'} : "php-fpm";
 
 if ( exists $ARGV[0] and $ARGV[0] eq "config" ) {
         print "graph_title PHP5-FPM Memory Usage\n";
